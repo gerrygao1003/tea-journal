@@ -1,20 +1,16 @@
-import React from "react";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import JournalList from './JournalList';
 
-const Journal = () =>{
-    
+
+const Journal = () => {
     return(
-        <div>
+       
+        <Switch>
+            <Route exact path="/journal" component={JournalList}/>
+        </Switch>
 
-            <div className="container">
-            
-                <h1>Journal </h1>
-            
-            </div>
-        </div>
-        
     )
-
-
 }
 
 export default Journal;
