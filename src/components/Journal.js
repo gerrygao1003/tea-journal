@@ -7,6 +7,7 @@ import JournalData from '../JournalData';
 const Journal = () => {
     return(
         
+
         <Switch>
             <Route exact path="/journal" component={JournalList}/>
             <Route exact path="/journal/:id" 
