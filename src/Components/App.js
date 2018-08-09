@@ -9,25 +9,47 @@ class App extends Component {
     super();
     this.state = {
       display: "JournalList",
-      teaInfo: {}
+      teaInfo: {},
+      localJournals: []
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     console.log("mounting");
-    const Journals = {};
-    localStorage.setItem('Journals', JSON.stringify(Journals));
+    let tempJournals = [];
+
+    if(localStorage.getItem("journals") != null){
+      tempJournals = JSON.parse(localStorage.getItem("journals"));
+      console.log(tempJournals);
+      this.setState({
+        localJournals: tempJournals
+      })
+
+    }
+
+      localStorage.setItem("journals", JSON.stringify(tempJournals));
+
   }
 
   handleDisplay = () => {
     switch(this.state.display) {
       case "JournalList":
-        return <JournalList changeDisplay={this.changeDisplay}/>;
+        return <JournalList changeDisplay={this.changeDisplay } localJournals = {this.state.localJournals}/>;
       case "NewJournal":
-        return <JournalForm changeDisplay={this.changeDisplay}/>;
+        return <JournalForm changeDisplay = {this.changeDisplay} 
+                            localJournals = {this.state.localJournals}
+                            addJournal = {this.addJournal}/>;
       default:
-        return <JournalList changeDisplay={this.changeDisplay}/>;
+        return <JournalList changeDisplay={this.changeDisplay} localJournals = {this.state.localJournals}/>;
     }
+  }
+
+  addJournal = (item)=>{
+    var temp = this.state.localJournals;
+    temp.push(item);
+    this.setState({localJournals: temp});
+    localStorage.setItem("journals", JSON.stringify(this.state.localJournals));
+
   }
 
   changeDisplay = (pageName) => {
